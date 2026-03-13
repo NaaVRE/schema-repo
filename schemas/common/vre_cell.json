@@ -1,0 +1,35 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://naavre.net/schemas/common/vre_cell.json",
+  "title": "vre_cell",
+  "description": "Schema for a VRE notebook cell.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "title": {
+      "type": "string",
+      "examples": [
+        "check-var-types-with-header",
+        "analysis",
+        "Model Training"
+      ]
+    },
+    "inputs": {
+      "type": "array",
+      "items": {
+        "$ref": "variable.json"
+      }
+    },
+    "outputs": {
+      "type": "array",
+      "items": {
+        "$ref": "variable.json"
+      }
+    }
+  },
+  "required": [
+    "title",
+    "inputs",
+    "outputs"
+  ]
+}

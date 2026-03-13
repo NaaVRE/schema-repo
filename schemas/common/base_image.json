@@ -1,0 +1,26 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://naavre.net/schemas/common/base_image.json",
+  "title": "base_image",
+  "description": "Schema for a base image used in a NAAVRE workflow",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "build": {
+      "type": "string",
+      "examples": [
+        "ghcr.io/naavre/flavors/naavre-fl-vanilla-cell-build:v0.1.13"
+      ]
+    },
+    "runtime": {
+      "type": "string",
+      "examples": [
+        "ghcr.io/naavre/flavors/naavre-fl-vanilla-cell-runtime:v0.1.1"
+      ]
+    }
+  },
+  "required": [
+    "build",
+    "runtime"
+  ]
+}

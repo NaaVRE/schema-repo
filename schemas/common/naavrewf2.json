@@ -1,0 +1,37 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://naavre.net/schemas/common/naavrewf2.json",
+  "title": "naavrewf2",
+  "description": "Schema the NAAVRE workflow",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "base_image": {
+      "$ref": "base_image.json"
+    },
+    "dependencies": {
+      "type": "array",
+      "items": {
+        "$ref": "dependency.json"
+      }
+    },
+    "nodes": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "links": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    }
+  },
+    "required": [
+        "base_image",
+      "nodes",
+      "links"
+    ]
+}
+
