@@ -1,0 +1,65 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://naavre.net/schemas/order/order.schema.json",
+  "title": "Order",
+  "description": "An order in the system",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique identifier for the order"
+    },
+    "user_id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "ID of the user who placed the order"
+    },
+    "status": {
+      "$ref": "https://naavre.net/schemas/order/order_status.enum.json",
+      "description": "Current status of the order"
+    },
+    "items": {
+      "type": "array",
+      "description": "List of items in the order",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "properties": {
+          "product_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "ID of the product"
+          },
+          "quantity": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Quantity of the product"
+          },
+          "unit_price": {
+            "type": "number",
+            "minimum": 0,
+            "description": "Price per unit at time of order"
+          }
+        },
+        "required": ["product_id", "quantity", "unit_price"]
+      }
+    },
+    "total_amount": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Total order amount"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when the order was created"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when the order was last updated"
+    }
+  },
+  "required": ["id", "user_id", "status", "items", "total_amount", "created_at", "updated_at"]
+}

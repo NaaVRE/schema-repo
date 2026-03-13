@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://naavre.net/schemas/order/order_status.enum.json",
+  "title": "OrderStatus",
+  "description": "Possible statuses for an order",
+  "type": "string",
+  "enum": [
+    "pending",
+    "confirmed",
+    "processing",
+    "shipped",
+    "delivered",
+    "cancelled",
+    "refunded"
+  ]
+}
