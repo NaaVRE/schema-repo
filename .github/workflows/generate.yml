@@ -61,7 +61,8 @@ jobs:
           mkdir -p packages/naavre-typescript-types/src
           for schema in schemas/*.json; do
             filename=$(basename "$schema" .json)
-            json2ts -i "$schema" -o "packages/naavre-typescript-types/src/${filename}.d.ts"
+            # Resolve relative $ref entries (e.g. "base_image.json") from the schemas directory.
+            json2ts --cwd schemas -i "$schema" -o "packages/naavre-typescript-types/src/${filename}.d.ts"
           done
 
 #      - name: Upload TypeScript types artifact
