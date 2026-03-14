@@ -65,11 +65,11 @@ jobs:
             json2ts --cwd schemas -i "$schema" -o "packages/naavre-typescript-types/src/${filename}.d.ts"
           done
 
-#      - name: Upload TypeScript types artifact
-#        uses: actions/upload-artifact@v4
-#        with:
-#          name: naavre-typescript-types
-#          path: packages/naavre-typescript-types/
+      - name: Upload TypeScript types artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: naavre-typescript-types
+          path: packages/naavre-typescript-types/
 
 #      - name: Commit generated TypeScript types
 #        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
