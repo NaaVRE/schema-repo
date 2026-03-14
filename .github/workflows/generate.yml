@@ -32,25 +32,18 @@ jobs:
           python-version: "3.11"
 
       - name: Install datamodel-code-generator
-        run: pip install "datamodel-code-generator>=0.25"
+        run: pip -r requirements.txt
 
       - name: Generate Python models
-        run: bash generators/generate_python.sh
-
-      - name: Upload Python models artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: python-models
-          path: packages/python-models/
-
-      - name: Commit generated Python models
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add packages/python-models/src/
-          git diff --cached --quiet || git commit -m "chore: regenerate Python models [skip ci]"
-          git push
+          datamodel-codegen \
+          --input schemas \
+          --input-file-type jsonschema  \
+          --output packages/naavre-python-models \
+          --output-model-type pydantic_v2.BaseModel  \
+          --use-standard-collections  \
+          --use-annotated  \
+          --field-constraints
 
   generate-typescript:
     name: Generate TypeScript Types
@@ -68,51 +61,24 @@ jobs:
         run: npm install -g json-schema-to-typescript
 
       - name: Generate TypeScript types
-        run: bash generators/generate_typescript.sh
-
-      - name: Upload TypeScript types artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: typescript-types
-          path: packages/typescript-types/
-
-      - name: Commit generated TypeScript types
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add packages/typescript-types/src/
-          git diff --cached --quiet || git commit -m "chore: regenerate TypeScript types [skip ci]"
-          git push
+          mkdir -p packages/naavre-typescript-types/src
+          for schema in schemas/*.json; do
+            filename=$(basename "$schema" .json)
+            json2ts -i "$schema" -o "packages/naavre-typescript-types/src/${filename}.d.ts"
+          done
 
-  generate-docs:
-    name: Generate API Documentation
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+#      - name: Upload TypeScript types artifact
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: naavre-typescript-types
+#          path: packages/naavre-typescript-types/
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-
-      - name: Install Redocly CLI
-        run: npm install -g @redocly/cli
-
-      - name: Generate API documentation
-        run: bash generators/generate_docs.sh
-
-      - name: Upload docs artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: api-docs
-          path: docs/
-
-      - name: Deploy docs to GitHub Pages
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./docs
-          commit_message: "docs: update generated API documentation [skip ci]"
+#      - name: Commit generated TypeScript types
+#        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+#        run: |
+#          git config user.name "github-actions[bot]"
+#          git config user.email "github-actions[bot]@users.noreply.github.com"
+#          git add packages/naavre-typescript-types/src/
+#          git diff --cached --quiet || git commit -m "chore: regenerate TypeScript types [skip ci]"
+#          git push

@@ -15,6 +15,12 @@
         "secret_1"
       ]
     },
+    "node_id": {
+      "type": "string",
+      "examples": [
+        "47a1e5c5-545f-4f9a-b276-1c0d4414b11a"
+      ]
+    },
     "type": {
       "type": "string",
       "enum": [
@@ -42,6 +48,7 @@
   },
   "required": [
     "name",
+    "node_id",
     "type"
   ]
 }
