@@ -1,0 +1,81 @@
+name: Generate Models & Docs
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "schemas/**"
+  pull_request:
+    paths:
+      - "schemas/**"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate-python:
+    name: Generate Python Models
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install datamodel-code-generator
+        run: pip install -r requirements.txt
+
+      - name: Generate Python models
+        run: |
+          datamodel-codegen \
+          --input schemas \
+          --input-file-type jsonschema  \
+          --output packages/naavre-python-models \
+          --output-model-type pydantic_v2.BaseModel  \
+          --use-standard-collections  \
+          --use-annotated  \
+          --field-constraints
+
+  generate-typescript:
+    name: Generate TypeScript Types
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install json-schema-to-typescript
+        run: npm install -g json-schema-to-typescript
+
+      - name: Generate TypeScript types
+        run: |
+          mkdir -p packages/naavre-typescript-types/src
+          for schema in schemas/*.json; do
+            filename=$(basename "$schema" .json)
+            # Resolve relative $ref entries (e.g. "base_image.json") from the schemas directory.
+            json2ts --cwd schemas -i "$schema" -o "packages/naavre-typescript-types/src/${filename}.d.ts"
+          done
+
+      - name: Upload TypeScript types artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: naavre-typescript-types
+          path: packages/naavre-typescript-types/
+
+#      - name: Commit generated TypeScript types
+#        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+#        run: |
+#          git config user.name "github-actions[bot]"
+#          git config user.email "github-actions[bot]@users.noreply.github.com"
+#          git add packages/naavre-typescript-types/src/
+#          git diff --cached --quiet || git commit -m "chore: regenerate TypeScript types [skip ci]"
+#          git push

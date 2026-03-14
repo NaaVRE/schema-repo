@@ -1,0 +1,53 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://naavre.net/schemas/common/naavrewf2_payload.json",
+  "title": "naavrewf2_payload",
+  "description": "Schema for the payload of a NAAVRE workflow",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "virtual_lab": {
+      "type": "string",
+      "examples": [
+        "open_lab",
+        "phytoplankton_lab",
+        "r_lab"
+      ]
+    },
+    "params": {
+      "type": "array",
+      "items": {
+        "$ref": "variable.json"
+      }
+    },
+    "secrets": {
+      "type": "array",
+      "items": {
+        "$ref": "variable.json"
+      }
+    },
+    "naavrewf2": {
+      "$ref": "naavrewf2.json"
+    },
+    "user_name": {
+      "type": "string",
+      "examples": [
+        "alice",
+        "bob",
+        "charlie"
+      ]
+    },
+    "cron_schedule": {
+      "type": "string",
+      "examples": [
+        "0 0 * * *",
+        "0 12 * * 1-5",
+        "0 0 1 * *"
+      ]
+    }
+  },
+  "required": [
+    "virtual_lab",
+    "naavrewf2"
+  ]
+}
