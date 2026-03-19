@@ -29,14 +29,6 @@
     "naavrewf2": {
       "$ref": "naavrewf2.json"
     },
-    "user_name": {
-      "type": "string",
-      "examples": [
-        "alice",
-        "bob",
-        "charlie"
-      ]
-    },
     "cron_schedule": {
       "type": "string",
       "examples": [
