@@ -6,15 +6,6 @@
   "type": "object",
   "additionalProperties": false,
   "properties": {
-    "base_image": {
-      "$ref": "base_image.json"
-    },
-    "dependencies": {
-      "type": "array",
-      "items": {
-        "$ref": "dependency.json"
-      }
-    },
     "nodes": {
       "type": "array",
       "items": {
@@ -29,7 +20,6 @@
     }
   },
     "required": [
-        "base_image",
       "nodes",
       "links"
     ]
