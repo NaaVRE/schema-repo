@@ -48,6 +48,8 @@
   },
   "required": [
     "virtual_lab",
+    "params",
+    "secrets",
     "naavrewf2"
   ]
 }
