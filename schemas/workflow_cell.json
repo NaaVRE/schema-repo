@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://naavre.net/schemas/common/vre_cell.json",
-  "title": "vre_cell",
+  "$id": "https://naavre.net/schemas/common/workflow_cell.json",
+  "title": "workflow_cell",
   "description": "Schema for a VRE notebook cell.",
   "type": "object",
   "additionalProperties": false,
