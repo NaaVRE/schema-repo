@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://naavre.net/schemas/common/variable.json",
   "title": "variable",
-  "description": "Reusable schema for a cell variable.",
+  "description": "Reusable schema for a all variables.",
   "type": "object",
   "additionalProperties": false,
   "properties": {
@@ -15,16 +15,11 @@
         "secret_1"
       ]
     },
-    "node_id": {
-      "type": "string",
-      "examples": [
-        "47a1e5c5-545f-4f9a-b276-1c0d4414b11a"
-      ]
-    },
     "type": {
       "type": "string",
       "enum": [
-        "number",
+        "float",
+        "int",
         "list",
         "string"
       ]
@@ -33,22 +28,20 @@
       "type": "string",
       "examples": [
         "42",
+        "1.1",
         "[1, 2, 3]",
         "hello world"
       ]
     },
-    "default_value": {
+    "node_id": {
       "type": "string",
       "examples": [
-        "42",
-        "[1, 2, 3]",
-        "hello world"
+        "a24c2f55-1ac8-44ba-9ef9-e841bac5389a"
       ]
     }
   },
   "required": [
     "name",
-    "node_id",
     "type"
   ]
 }

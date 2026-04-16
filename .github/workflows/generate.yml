@@ -40,6 +40,16 @@ jobs:
           --use-standard-collections  \
           --use-annotated  \
           --field-constraints
+          
+      - name: Commit generated Python models
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add packages/naavre-python-models/
+          git diff --cached --quiet || git commit -m "chore: regenerate Python models [skip ci]"
+          git push  
+          
 
   generate-typescript:
     name: Generate TypeScript Types
@@ -65,17 +75,11 @@ jobs:
             json2ts --cwd schemas -i "$schema" -o "packages/naavre-typescript-types/src/${filename}.d.ts"
           done
 
-      - name: Upload TypeScript types artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: naavre-typescript-types
-          path: packages/naavre-typescript-types/
-
-#      - name: Commit generated TypeScript types
-#        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-#        run: |
-#          git config user.name "github-actions[bot]"
-#          git config user.email "github-actions[bot]@users.noreply.github.com"
-#          git add packages/naavre-typescript-types/src/
-#          git diff --cached --quiet || git commit -m "chore: regenerate TypeScript types [skip ci]"
-#          git push
+      - name: Commit generated TypeScript types
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add packages/naavre-typescript-types/src/
+          git diff --cached --quiet || git commit -m "chore: regenerate TypeScript types [skip ci]"
+          git push
