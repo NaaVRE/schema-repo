@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://naavre.net/schemas/common/variable.json",
   "title": "variable",
-  "description": "Reusable schema for a cell variable.",
+  "description": "Reusable schema for a all variables.",
   "type": "object",
   "additionalProperties": false,
   "properties": {
