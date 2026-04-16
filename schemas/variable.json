@@ -32,6 +32,12 @@
         "[1, 2, 3]",
         "hello world"
       ]
+    },
+    "node_id": {
+      "type": "string",
+      "examples": [
+        "a24c2f55-1ac8-44ba-9ef9-e841bac5389a"
+      ]
     }
   },
   "required": [
